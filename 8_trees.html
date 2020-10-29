@@ -8,20 +8,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width">
-<meta property="og:title" content="Lab 7: Nonlinear Models" />
+<meta property="og:title" content="Lab 8: Tree-based Models" />
 
 
 
 
 
 
-<meta name="description" content="Lab 7: Nonlinear Models">
+<meta name="description" content="Lab 8: Tree-based Models">
 
 <script id="pandoc-meta" type="application/json">
-{"newpage_html_class":"page-break-after","output":{"pagedown::html_paged":{"self_contained":true,"css":["style/my-style-page.css","default-fonts","default-page","default"],"number_sections":true}},"title":"Lab 7: Nonlinear Models"}
+{"newpage_html_class":"page-break-after","output":{"pagedown::html_paged":{"self_contained":true,"css":["style/my-style-page.css","default-fonts","default-page","default"],"number_sections":true}},"title":"Lab 8: Tree-based Models"}
 </script>
 
-<title>Lab 7: Nonlinear Models</title>
+<title>Lab 8: Tree-based Models</title>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
@@ -28700,7 +28700,7 @@ break-after: always;
 
 <div class="front-page">
 <div id="header" class="title-page">
-<h1 class="title">Lab 7: Nonlinear Models</h1>
+<h1 class="title">Lab 8: Tree-based Models</h1>
 </div>
 </div>
 
@@ -28708,53 +28708,75 @@ break-after: always;
 </div>
 
 <div class="main">
-<p>We will continue to use the <code>Wage</code> data set in the <code>ISLR</code> package to predict <code>wage</code> for <span class="math inline">\(3,000\)</span> mid-atlantic male workers.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse) </a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(knitr)</a>
+<p>We will use the <code>Carseats</code> data set in the <code>ISLR</code> package to predict <code>high_sales</code> for carseats at 400 different stores.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ISLR) <span class="co">## data package</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse) <span class="co">## data manipulation</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(knitr) <span class="co">## tables</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">str</span>(Wage)</a></code></pre></div>
-<pre><code>## 'data.frame':    3000 obs. of  11 variables:
-##  $ year      : int  2006 2004 2003 2003 2005 2008 2009 2008 2006 2004 ...
-##  $ age       : int  18 24 45 43 50 54 44 30 41 52 ...
-##  $ maritl    : Factor w/ 5 levels &quot;1. Never Married&quot;,..: 1 1 2 2 4 2 2 1 1 2 ...
-##  $ race      : Factor w/ 4 levels &quot;1. White&quot;,&quot;2. Black&quot;,..: 1 1 1 3 1 1 4 3 2 1 ...
-##  $ education : Factor w/ 5 levels &quot;1. &lt; HS Grad&quot;,..: 1 4 3 4 2 4 3 3 3 2 ...
-##  $ region    : Factor w/ 9 levels &quot;1. New England&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ jobclass  : Factor w/ 2 levels &quot;1. Industrial&quot;,..: 1 2 1 2 2 2 1 2 2 2 ...
-##  $ health    : Factor w/ 2 levels &quot;1. &lt;=Good&quot;,&quot;2. &gt;=Very Good&quot;: 1 2 1 2 1 2 2 1 2 2 ...
-##  $ health_ins: Factor w/ 2 levels &quot;1. Yes&quot;,&quot;2. No&quot;: 2 2 1 1 1 1 1 1 1 1 ...
-##  $ logwage   : num  4.32 4.26 4.88 5.04 4.32 ...
-##  $ wage      : num  75 70.5 131 154.7 75 ...</code></pre>
-<div id="polynomial-regression-and-step-functions" class="section level2">
-<h2><span class="header-section-number">0.1</span> Polynomial Regression and Step Functions</h2>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">## reproducible</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">set.seed</span>(<span class="dv">445</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">## data</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">str</span>(Carseats)</a></code></pre></div>
+<pre><code>## 'data.frame':    400 obs. of  11 variables:
+##  $ Sales      : num  9.5 11.22 10.06 7.4 4.15 ...
+##  $ CompPrice  : num  138 111 113 117 141 124 115 136 132 132 ...
+##  $ Income     : num  73 48 35 100 64 113 105 81 110 113 ...
+##  $ Advertising: num  11 16 10 4 3 13 0 15 0 0 ...
+##  $ Population : num  276 260 269 466 340 501 45 425 108 131 ...
+##  $ Price      : num  120 83 80 97 128 72 108 120 124 124 ...
+##  $ ShelveLoc  : Factor w/ 3 levels &quot;Bad&quot;,&quot;Good&quot;,&quot;Medium&quot;: 1 2 3 3 1 1 3 2 3 3 ...
+##  $ Age        : num  42 65 59 55 38 78 71 67 76 76 ...
+##  $ Education  : num  17 10 12 14 13 16 15 10 10 17 ...
+##  $ Urban      : Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 2 2 2 2 2 1 2 2 1 1 ...
+##  $ US         : Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 2 2 2 2 1 2 1 2 1 2 ...</code></pre>
+<div id="data-preparation" class="section level2">
+<h2><span class="header-section-number">0.1</span> Data Preparation</h2>
 <ol style="list-style-type: decimal">
-<li><p>Fit a degree-4 polynomial regression model predicting <code>wage</code> based on <code>age</code>. Inspect your model with the <code>summary</code> function. [<strong>Hint</strong>: you can use the <code>poly</code> function to create your polynomials in the model.]</p></li>
-<li><p>One way we can choose the degree of our polynomial is through hypothesis testing. Fit polynomial models from linear to degree-5 of <code>wage</code> on <code>age</code>. We wish to choose the simplest model which is sufficient to explain the relationship between <code>wage</code> and <code>age</code>.</p>
-<p>To do this, we can use the <code>anova</code> function on our fitted models. This uses an <span class="math inline">\(F\)</span> statistic to test the null hypothesis that a model <span class="math inline">\(\mathcal{M}_1\)</span> is sufficient to explain the data against a more complex model <span class="math inline">\(\mathcal{M}_2\)</span> (the alternative). Because our models are nested, we can compare all at once sequentially.</p>
-<p>We will choose the simplest model that is still significantly different from the less complex model.</p>
-<p>Use ANOVA (analysis of variance) to choose your polynomial regression model. Which model would you pick?</p></li>
-<li><p>Choose your degree of polynomial using a cross validation approach. Do the chosen degrees match?</p></li>
-<li><p>Fit a step function for <code>age</code> predicting <code>wage</code> with <span class="math inline">\(4\)</span> cut points. You can use the function <code>cut</code> to change your quantitative variable into a categorical one. Let <code>cut</code> automatically choose the cut locations based on your data.</p></li>
+<li>Make a copy of the <code>Carseats</code> data frame called <code>df</code>.</li>
+<li>Create a variable called <code>high_sales</code> in <code>df</code> that takes the value “high” if <code>Sales</code> &gt; 8 and “low” otherwise.</li>
+<li>Convert your <code>high_sales</code> column to be a factor.</li>
+<li>Remove the <code>Sales</code> column from <code>df</code>.</li>
 </ol>
 </div>
-<div id="regression-splines" class="section level2">
-<h2><span class="header-section-number">0.2</span> Regression Splines</h2>
-<p>To fit regression splines, we will use the <code>splines</code> library. The <code>bs</code> function generates a matrix of basis functions for regression splines (defaults cubic) based on a vector of knots or a specified degree of freedom. The <code>ns</code> function is the same for natural splines.</p>
-<p>We can use either of these functions within the <code>lm</code> command:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(splines)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="kw">bs</span>(<span class="dt">df =</span> <span class="dv">5</span>, <span class="dt">degree =</span> <span class="dv">2</span>), <span class="dt">data =</span> df)</a></code></pre></div>
+<div id="decision-trees" class="section level2">
+<h2><span class="header-section-number">0.2</span> Decision Trees</h2>
+<p>The <code>tree</code> package is used to contruct classification and regression trees. We will construct a classification tree to predict</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tree) <span class="co">## tree package</span></a></code></pre></div>
 <ol style="list-style-type: decimal">
-<li><p>Fit <code>wage</code> on <code>age</code> using a cubic regression spline with knots at ages <span class="math inline">\(25, 40, 60\)</span>.</p></li>
-<li><p>Fit <code>wage</code> on <code>age</code> using a cubic regression spline with 6 degrees of freedom and knots chosen uniformly on the quantiles of the data (this is how <code>bs</code> does it by default).</p></li>
-<li><p>Fit <code>wage</code> on <code>age</code> using a natural cubic regression spline with 6 degrees of freedom and knots chosen uniformly on the quantiles of the data.</p></li>
-<li><p>Create a scatter plot of <code>wage</code> vs <code>age</code> with all three of your fitted splines overlayed as well as your chosen polynomial model (either by anova or CV). Comment on the shapes. [<strong>Hint:</strong> <code>predict</code> over a grid of <code>age</code> values might be helpful.]</p></li>
+<li><p>Using the <code>tree</code> function, fit a large classification tree to predict <code>high_sales</code> using every variable in <code>df</code>. [<strong>Hint:</strong> The syntax is very similar to <code>lm</code>]</p></li>
+<li><p>Inspect your tree using <code>summary</code>. How many terminal nodes do you have? Whatt is the training error rate?</p>
+<p>[<strong>Note:</strong> The “deviance” reported is given by <span class="math inline">\(-2\sum_m\sum_k n_{mk} \log \hat{p}_{mk}\)</span> where <span class="math inline">\(n_{mk}\)</span> is the number of observations in the <span class="math inline">\(m\)</span>th terminal node that belongs to the <span class="math inline">\(k\)</span>th class. A small deviance indicates a good fit to the training data.]</p></li>
+<li><p>Use the <code>plot</code> function to visualize your tree. What is the most important indicator of high sales?</p>
+<p>[<strong>Hint:</strong> Adding the following line after you plot the tree will add labels.
+<code>text(tree.fit, pretty = 0)</code>
+]</p></li>
+<li><p>Split your observations into a training and a test set with <span class="math inline">\(200\)</span> records each. Estimate the test error rate of your tree. [<strong>Hint:</strong> using <code>type = &quot;class&quot;</code> in your <code>predict</code> function will get you the actual class predictions.]</p></li>
+<li><p>Produce a confusion matrix for your test set.</p></li>
+<li><p>Use the <code>cv.tree</code> function to perform cross-validation to determine the optimal level of tree complexity. Using <code>FUN = prune.misclass</code> indicates that we want to use the classification error rate (instead of deviance) to guide the CV and pruning process. Which <span class="math inline">\(\alpha\)</span> (corresponds to <code>k</code> in the output) should we choose?</p></li>
+<li><p>Use the function <code>prune.misclass</code> to prune your tree to the chosen complexity.</p></li>
+<li><p>Repeat 4-5 using your pruned tree. Which performs better?</p></li>
 </ol>
 </div>
-<div id="gams" class="section level2">
-<h2><span class="header-section-number">0.3</span> GAMs</h2>
+<div id="bagging-random-forests" class="section level2">
+<h2><span class="header-section-number">0.3</span> Bagging &amp; Random Forests</h2>
+<p>We will use the <code>randomForest</code> package to perform bagging and random forests. Recall that bagging is simply a special case of random forests with <span class="math inline">\(m = p\)</span>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(randomForest) <span class="co"># random forests &amp; bagging</span></a></code></pre></div>
 <ol style="list-style-type: decimal">
-<li>Fit a GAM using natural spline functions of <code>year</code> and <code>age</code>, treating <code>education</code> as a quantitative predictor. You can do this using either <code>lm</code> (least squares) or <code>gam</code> in the <code>gam</code> package (fit using back propagation).</li>
+<li><p>Perform bagging on your training <code>df</code> to predict <code>high_sales</code>. Specify <code>importance = TRUE</code> to also obtain information on the importance of each predictor.</p></li>
+<li><p>Make a plot of the importance values for each predictor. What is the predictor with the highes importance?</p></li>
+<li><p>Estimate the test error rate using your bagged tree model.</p></li>
+<li><p>Repeat 1-3 using a random forest with <span class="math inline">\(m = \sqrt{p}\)</span>.</p></li>
+<li><p>Compare the OOB confusion matrix to your test confusion matrix. [<strong>Hint:</strong> The <code>confusion</code> element of the model output is OOB.]</p></li>
+</ol>
+</div>
+<div id="boosting" class="section level2">
+<h2><span class="header-section-number">0.4</span> Boosting</h2>
+<p>To perform boosting we will use the <code>gbm</code> function in the <code>gbm</code> package.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(gbm) <span class="co">## boosting package</span></a></code></pre></div>
+<ol style="list-style-type: decimal">
+<li><p>Fit a boosted tree ensemble to your training <code>df</code> predicting <code>high_sales</code> with <span class="math inline">\(B = 5,000\)</span> trees, shrinkage parameter of <span class="math inline">\(\lambda = 0.1\)</span>, and an interaction depth of <span class="math inline">\(d = 2\)</span>. We sure to include <code>distribution = &quot;bernoulli&quot;</code> to indicate a classification problem.</p></li>
+<li><p>Estimate the test error rate using your boosted tree model and compare to all previously fit models.</p></li>
 </ol>
 </div>
 </div>
