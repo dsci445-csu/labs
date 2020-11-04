@@ -36,8 +36,8 @@ cv_mse <- rep(NA, d)
 for(i in seq_len(d)) {
   cv_mse_i <- rep(NA, k) 
   for(j in seq_len(k)) {
-    train <- Wage[seq_len(n) != j,]
-    test <- Wage[seq_len(n) == j,]
+    train <- Wage[cv_labels != j,]
+    test <- Wage[cv_labels == j,]
     
     fit <- lm(wage ~ poly(age, i), data = train)
     pred <- predict(fit, test)
