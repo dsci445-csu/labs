@@ -12,7 +12,7 @@ x <- matrix(rnorm(n * p), ncol = p)
 
 ## shift the center of one group
 x[1:25, 1] <- x[1:25, 1] + 3
-x[1:25, 2] <- x[1:25, 1] - 4
+x[1:25, 2] <- x[1:25, 2] - 4
 
 # 1. Make a scatterplot to inspect the data. Describe what you see.
 
