@@ -41,10 +41,9 @@ my_mean <- function(x) {
 # 2. Alter your `my_mean()` function to take a second argument (`na.rm`) with default value `FALSE` that removes `NA` values if `TRUE`.
 my_mean <- function(x, na.rm = FALSE) {
   if(na.rm) {
-    sum(na.omit(x))/length(x)
-  } else {
-    sum(x)/length(x)
-  }
+    x <- na.omit(x)
+  } 
+  sum(x)/length(x)
 }
 
 # 3. Add checks to your function to make sure the input data is either numeric or logical. If it is logical convert it to numeric.
@@ -53,10 +52,9 @@ my_mean <- function(x, na.rm = FALSE) {
   if(is.logical(x)) x <- as.numeric(x)
   
   if(na.rm) {
-    sum(na.omit(x))/length(x)
-  } else {
-    sum(x)/length(x)
-  }
+    x <- na.omit(x)
+  } 
+  sum(x)/length(x)
 }
 
 # 4. The diamonds data set is included in the `ggplot2` package (not by default in `R`). It can be read into your environment with the following function. Loop over the columns of the diamonds data set and apply your mean function to all of the numeric columns (Hint: look at the `class()` function).
