@@ -17,7 +17,7 @@ This data contains percentage returns for the S\&P 500 stock index over 1,250 da
 
 1. Fit a logistic regression model to predict `Direction` using `Lag1` through `Lag5` and `Volume`. Describe your results.
 
-2. Use the `predict` and the `table` function to create a confusion matrix for the training data.
+2. Create a confusion matrix for the training data.
 
 3. What is the overall error rate of the model?
 
@@ -29,11 +29,11 @@ This data contains percentage returns for the S\&P 500 stock index over 1,250 da
 
 ## LDA
 
-1. Fit a linear discriminant analysis model (see the `MASS` library) to the `train` data set you created in the previous section with `Direction` as the response and `Lag1` and `Lag2` as the predictors.
+1. Fit a linear discriminant analysis model to the `train` data set you created in the previous section with `Direction` as the response and `Lag1` and `Lag2` as the predictors.
 
 2. What are the values for $\hat{\pi}_1$ and $\hat{\pi}_2$?
 
-3.  Use the `predict` and the `table` function to create a confusion matrix for the `test` data.
+3.  Create a confusion matrix for the `test` data.
 
 4. What is the test error rate?
 
@@ -41,15 +41,15 @@ This data contains percentage returns for the S\&P 500 stock index over 1,250 da
 
 1. Fit a quadratic discriminant analysis model to the `train` data set you created in the previous section with `Direction` as the response and `Lag1` and `Lag2` as the predictors.
 
-2.  Use the `predict` and the `table` function to create a confusion matrix for the `test` data.
+2.  Create a confusion matrix for the `test` data.
 
 3. What is the test error rate?
 
 ## KNN
 
-1. Fit a KNN model with $K = 1$ (see the `class` library) to the `train` data set you created in the previous section with `Direction` as the response and `Lag1` and `Lag2` as the predictors.
+1. Fit a KNN model with $K = 1$ to the `train` data set you created in the previous section with `Direction` as the response and `Lag1` and `Lag2` as the predictors.
 
-2. Use `table` function to create a confusion matrix for the `test` data.
+2. Create a confusion matrix for the `test` data.
 
 3. What is the test error rate?
 
