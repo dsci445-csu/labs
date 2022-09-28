@@ -1,7 +1,7 @@
 ## Libraries
 library(ISLR) ## data
 library(tidyverse) ## data manipulation & plots
-library(boot) ## cv.glm function
+library(tidymodels) ## tidy models
 
 ## Data
 head(Auto) %>%
@@ -13,16 +13,16 @@ set.seed(445)
 ## Validation Set Approach
 # 1. Split the data into 50% training and 50% test data.
 # 2. Fit a linear model of `mpg` on `horsepower` using your training data.
-# 3. Estimate the test error by using test MSE (hint: see `predict()`).
+# 3. Estimate the test error by using test MSE.
 # 4. Repeat steps 2-3 for a cubic and quadratic model. Which model would you pick?
 # 5. Repeat steps 1-4 after reseting the seed
 set.seed(42)
 # 6. Did you get the same results? Is this what you expected to happen?
   
 ## LOOCV
-# 1. Fit the linear model of `mpg` on `horsepower` using your training data from the previous section to check that you get the same coefficients.
-# 2. Get the estimate of CV using the `cv.glm()` function. (Hint: check `?cv.glm` to understand the values returned from this function.)
-# 3. Repeat steps 2-3 for a cubic and quadratic model. Which model would you pick?
+
+# 1. Get the estimate of test MSE for the linear model using LOOCV.
+# 2. Repeat steps 2-3 for a cubic and quadratic model. Which model would you pick?
 
 ## k-Fold CV
 # 1. Using $k = 10$-fold CV, compute the $k$-fold CV estimate of the test MSE for polynomial models of order $i = 1, \dots, 10$. (Hint: you can use the `poly` function in your formula to specify a polynomial model.)
