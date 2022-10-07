@@ -32500,7 +32500,7 @@ break-after: always;
 <div id="data-processing" class="section level2" number="0.1">
 <h2><span class="header-section-number">0.1</span> Data Processing</h2>
 <ol style="list-style-type: decimal">
-<li>You may need to remove records with missing data in your recipes. <code>step_naomit(all_vars())</code> is a good way to do this.</li>
+<li>Remove records with missing data. Create a new (complete) version of your data set. (Hint: <code>drop_na</code> in <code>tidyr</code> could be helpful.)</li>
 <li>You may need to create dummy variables for categorical variables in your recipes. <code>step_dummy(all_nominal_predictors())</code> is a good way to do this.</li>
 <li>You may need to standardize all variables in your recipes. <code>step_normalize(all_predictors())</code> is a good way to do this.</li>
 </ol>
@@ -32533,7 +32533,6 @@ break-after: always;
 <li>Fit the PCR model using 10-fold cross validation for values of <span class="math inline">\(M\)</span>. Be sure to normalize your predictors.</li>
 <li>Create a plot of the CV MSE vs. <span class="math inline">\(M\)</span>.</li>
 <li>When does the smallest cross-validation error occur? Which <span class="math inline">\(M\)</span> would you choose for your final model?</li>
-<li>How many principal components would we need to explain at least 80% of the variability in the predictors?</li>
 <li>How much variability in <span class="math inline">\(Y\)</span> is explained for your chosen value of <span class="math inline">\(M\)</span>?</li>
 </ol>
 </div>
@@ -32544,7 +32543,6 @@ break-after: always;
 <li>Fit the PLS model using 10-fold cross validation for values of <span class="math inline">\(M\)</span>. Be sure to normalize your predictors.</li>
 <li>Create a plot of the CV MSE vs. <span class="math inline">\(M\)</span>.</li>
 <li>When does the smallest cross-validation error occur? Which <span class="math inline">\(M\)</span> would you choose for your final model?</li>
-<li>How many principal components would we need to explain at least 80% of the variability in the predictors?</li>
 <li>How much variability in <span class="math inline">\(Y\)</span> is explained for your chosen value of <span class="math inline">\(M\)</span>?</li>
 <li>Discuss the difference between PCR and PLS results. Which would you prefer?</li>
 </ol>

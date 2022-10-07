@@ -28,13 +28,11 @@ set.seed(445)
 # 1. Fit the PCR model using 10-fold cross validation for values of $M$. Be sure to normalize your predictors.
 # 2. Create a plot of the CV MSE vs. $M$.
 # 3. When does the smallest cross-validation error occur? Which $M$ would you choose for your final model?
-# 4. How many principal components would we need to explain at least 80% of the variability in the predictors? 
-# 5. How much variability in $Y$ is explained for your chosen value of $M$?
+# 4. How much variability in $Y$ is explained for your chosen value of $M$?
 
 ## Partial Least Squares
 # 1. Fit the PLS model using 10-fold cross validation for values of $M$. Be sure to normalize your predictors.
 # 2. Create a plot of the CV MSE vs. $M$.
 # 3. When does the smallest cross-validation error occur? Which $M$ would you choose for your final model?
-# 4. How many principal components would we need to explain at least 80% of the variability in the predictors? 
-# 5. How much variability in $Y$ is explained for your chosen value of $M$?
-# 6. Discuss the difference between PCR and PLS results. Which would you prefer?
+# 4. How much variability in $Y$ is explained for your chosen value of $M$?
+# 5. Discuss the difference between PCR and PLS results. Which would you prefer?
