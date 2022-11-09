@@ -1,5 +1,5 @@
 ---
-title: "Lab 8: Tree-based Models"
+title: "Lab 7: Tree-based Models"
 output:
   pagedown::html_paged:
     css: ["style/my-style-page.css", "default-fonts", "default-page", "default"]
