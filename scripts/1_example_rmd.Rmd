@@ -1,0 +1,69 @@
+---
+title: "Hw 1"
+author: "Andee Kaplan"
+date: "Aug 30, 2023"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** *button* a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+1. This is a list
+1. also this
+1. number
+
+
+- bullets
+- list
+- items
+  - apple
+  - orange
+  - banana
+  
+This is some math: $y = mx + \epsilon$.
+$$
+Y = X^\top \beta + \epsilon
+$$
+
+latex + format
+
+```{r cars}
+summary(cars)
+```
+
+```{r, fig.cap="This is a histogram.", fig.height=2, out.width="50%", fig.show='hold', cache=TRUE, echo=FALSE}
+df <- data.frame(num = 1:5, let = c("a", "b", "a", "b", "c"))
+
+library(ggplot2)
+
+ggplot(df) +
+  geom_histogram(aes(num), bins = 3)
+
+ggplot(df) +
+  geom_histogram(aes(num), bins = 3)
+
+library(knitr)
+
+kable(df, caption = "This is my table.")
+```
+
+The mean of my data is `r mean(df$num)`.
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

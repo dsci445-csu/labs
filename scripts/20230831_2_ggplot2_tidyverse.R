@@ -42,7 +42,7 @@ ggplot(mpg) +
 # 7. BONUS - Color your histograms from 1. by `cyl`. Did this do what you thought it would? (Look at `fill` and `group` as options instead).
 
 ggplot(mpg) +
-  geom_histogram(aes(hwy, fill = factor(cyl), group = cyl), bins = 15, position = "dodge") +
+  geom_histogram(aes(hwy, fill = factor(cyl)), bins = 15, position = "dodge") +
   facet_wrap(~drv)
 
 
