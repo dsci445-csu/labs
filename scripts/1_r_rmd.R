@@ -8,6 +8,8 @@
 # 6. View (not modify) the first 10 values in your vector.
 # 7. View (not modify) the last 10 values in your vector.
 
+
+
 ## Data Frames --------------------------------------------------------------
 # 1. Make a data frame with column 1: `1,2,3,4,5,6` and column 2: `a,b,a,b,a,b`
 # 2. Select only rows with value "a" in column 2 using logical vector
