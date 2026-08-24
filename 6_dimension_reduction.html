@@ -8,20 +8,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width">
-<meta property="og:title" content="Lab 5: Regularization" />
+<meta property="og:title" content="Lab 6: Dimension Reduction" />
 
 
 
 
 
 
-<meta name="description" content="Lab 5: Regularization">
+<meta name="description" content="Lab 6: Dimension Reduction">
 
 <script id="pandoc-meta" type="application/json">
-{"newpage_html_class":"page-break-after","output":{"pagedown::html_paged":{"css":["style/my-style-page.css","default-fonts","default-page","default"],"number_sections":true,"self_contained":true}},"title":"Lab 5: Regularization"}
+{"newpage_html_class":"page-break-after","output":{"pagedown::html_paged":{"css":["style/my-style-page.css","default-fonts","default-page","default"],"number_sections":true,"self_contained":true}},"title":"Lab 6: Dimension Reduction"}
 </script>
 
-<title>Lab 5: Regularization</title>
+<title>Lab 6: Dimension Reduction</title>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
@@ -32463,7 +32463,7 @@ break-after: always;
 
 <div class="front-page">
 <div id="header" class="title-page">
-<h1 class="title">Lab 5: Regularization</h1>
+<h1 class="title">Lab 6: Dimension Reduction</h1>
 </div>
 </div>
 
@@ -32506,25 +32506,25 @@ break-after: always;
 <li>You may need to standardize all variables in your recipes. <code>step_normalize(all_predictors())</code> is a good way to do this.</li>
 </ol>
 </div>
-<div id="ridge-regression" class="section level2" number="2">
-<h2><span class="header-section-number">2</span> Ridge Regression</h2>
-<p>The <code>linear_reg()</code> specification can perform both ridge regression and the lasso. This is done with the specification of a parameter <code>mixture</code>. If <code>mixture = 0</code> then a ridge regression model is fit and if <code>mixture = 1</code> then the lasso is fit. Here is an example for ridge regression with penalty <span class="math inline">\(= \lambda\)</span>:</p>
-<pre><code>ridge_spec &lt;- linear_reg(mixture = 0, penalty = lambda) |&gt;
-  set_mode(&quot;regression&quot;) |&gt;
-  set_engine(&quot;glmnet&quot;)</code></pre>
+<div id="principal-components-regression" class="section level2" number="2">
+<h2><span class="header-section-number">2</span> Principal Components Regression</h2>
+<p>The function call <code>step_pca(all_predictors(), num_comp = d)</code> will compute <span class="math inline">\(d\)</span> principal components of predictors in a data frame as a component in a recipe.</p>
 <ol style="list-style-type: decimal">
-<li>Create a vector of <span class="math inline">\(\lambda\)</span> values from <span class="math inline">\(\lambda = .01\)</span> to <span class="math inline">\(\lambda = 10^10\)</span> of length <span class="math inline">\(100\)</span>.</li>
-<li>Fit a ridge regression model for each <span class="math inline">\(\lambda\)</span> in your grid. Be sure to normalize your predictors.</li>
-<li>Make a line plot of coefficient corresponding to each <span class="math inline">\(\lambda\)</span>. You should have an individual line for each variable with coefficient value on the <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(\lambda\)</span> on the <span class="math inline">\(x\)</span> axis. What happens to your coefficients as <span class="math inline">\(\lambda\)</span> increases?</li>
-<li>Perform <span class="math inline">\(10\)</span>-fold cross validation and get an estimate of the test MSE for each <span class="math inline">\(\lambda\)</span> in your grid. Which <span class="math inline">\(\lambda\)</span> would you choose and why? (Hint: look at the <code>tune</code> package for a fast way to do this.)</li>
+<li>Fit the PCR model using 10-fold cross validation for values of <span class="math inline">\(M\)</span>. Be sure to normalize your predictors.</li>
+<li>Create a plot of the CV MSE vs. <span class="math inline">\(M\)</span>.</li>
+<li>When does the smallest cross-validation error occur? Which <span class="math inline">\(M\)</span> would you choose for your final model?</li>
+<li>How much variability in <span class="math inline">\(Y\)</span> is explained for your chosen value of <span class="math inline">\(M\)</span>?</li>
 </ol>
 </div>
-<div id="lasso" class="section level2" number="3">
-<h2><span class="header-section-number">3</span> Lasso</h2>
+<div id="partial-least-squares" class="section level2" number="3">
+<h2><span class="header-section-number">3</span> Partial Least Squares</h2>
+<p>The function call <code>step_pls(all_predictors(), num_comp = d)</code> will compute <span class="math inline">\(d\)</span> partial least squares components of predictors in a data frame as a component in a recipe.</p>
 <ol style="list-style-type: decimal">
-<li>Fit the lasso model for each <span class="math inline">\(\lambda\)</span> in your grid.</li>
-<li>Make a line plot of coefficient corresponding to each <span class="math inline">\(\lambda\)</span>. You should have an individual line for each variable with coefficient value on the <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(\lambda\)</span> on the <span class="math inline">\(x\)</span> axis. (Hint: <code>coef</code> may be a useful function). What happens to your coefficients as <span class="math inline">\(\lambda\)</span> increases?</li>
-<li>Perform <span class="math inline">\(10\)</span>-fold cross validation and get an estimate of the test MSE for each <span class="math inline">\(\lambda\)</span> in your grid. Which <span class="math inline">\(\lambda\)</span> would you choose and why?</li>
+<li>Fit the PLS model using 10-fold cross validation for values of <span class="math inline">\(M\)</span>. Be sure to normalize your predictors.</li>
+<li>Create a plot of the CV MSE vs. <span class="math inline">\(M\)</span>.</li>
+<li>When does the smallest cross-validation error occur? Which <span class="math inline">\(M\)</span> would you choose for your final model?</li>
+<li>How much variability in <span class="math inline">\(Y\)</span> is explained for your chosen value of <span class="math inline">\(M\)</span>?</li>
+<li>Discuss the difference between PCR and PLS results. Which would you prefer?</li>
 </ol>
 </div>
 </div>

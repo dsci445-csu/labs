@@ -24,15 +24,3 @@ set.seed(445)
 # 2. Make a line plot of coefficient corresponding to each $\lambda$. You should have an individual line for each variable with coefficient value on the $y$-axis and $\lambda$ on the $x$ axis. (Hint: `coef` may be a useful function). What happens to your coefficients as $\lambda$ increases?
 # 3. Perform $10$-fold cross validation and get an estimate of the test MSE for each $\lambda$ in your grid. Which $\lambda$ would you choose and why?
   
-## Principal Components Regression
-# 1. Fit the PCR model using 10-fold cross validation for values of $M$. Be sure to normalize your predictors.
-# 2. Create a plot of the CV MSE vs. $M$.
-# 3. When does the smallest cross-validation error occur? Which $M$ would you choose for your final model?
-# 4. How much variability in $Y$ is explained for your chosen value of $M$?
-
-## Partial Least Squares
-# 1. Fit the PLS model using 10-fold cross validation for values of $M$. Be sure to normalize your predictors.
-# 2. Create a plot of the CV MSE vs. $M$.
-# 3. When does the smallest cross-validation error occur? Which $M$ would you choose for your final model?
-# 4. How much variability in $Y$ is explained for your chosen value of $M$?
-# 5. Discuss the difference between PCR and PLS results. Which would you prefer?
